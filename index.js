@@ -59,6 +59,15 @@ if (!test) {
   ParseServer.createLiveQueryServer(httpServer);
 }
 
+
+app.post('/mux', async function(req, res) {
+  const { type: eventType, data: eventData } = await json(req);
+  Parse.Cloud.run('webhook', { eventType: eventType, eventData: eventData } , {})
+  res.status(200).send("Thanks, Mux!")
+});
+
+
+
 module.exports = {
   app,
   config,
